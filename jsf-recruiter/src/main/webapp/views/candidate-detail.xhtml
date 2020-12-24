@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head></h:head>
+<body>
+	<ui:composition template="/template/template.xhtml">
+		<ui:define name="title">Candidates</ui:define>
+		<ui:define name="head">#{candidateBean.candidate.id!=0 ? 'Candidates Detail' : 'Add New Candidates Detail'}</ui:define>
+		<ui:define name="content">
+		<div class="container my-5">
+			<div class="row" id="comp-info">
+				<div class="col-12 col-md-6">
+					<div class="container p-3 shadow">
+						<div class="card-header">
+							<span class="text-primary"><i class="fas fa-user mr-2"></i>Candidates Profile</span>
+						</div>
+						<div class="card-body">	
+						<!-- candidate profile -->
+							<h:form styleClass="form">
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Name:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.name}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Phone:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.phone}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Email:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.email}" />
+									</div>
+								</div>	
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Expected Salary:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.expectedSalary}" />
+									</div>
+								</div>	
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Township:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.township.name}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="CV Link:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLink value="#{request.contextPath}/CV_Uploads/#{candidateBean.candidate.cv_form}">#{candidateBean.candidate.cv_form}</h:outputLink>
+									</div>
+								</div>		
+							</h:form>				
+						</div>								
+					</div>									
+				</div>
+				<div class="col-12 col-md-6 " id="other-info">
+					<div class="container p-3 shadow">		
+						<div class="card-header">
+							<span class="text-primary"><i class="fas fa-info-circle mr-2"></i>Other Information</span>
+						</div>
+						<div class="card-body">	
+						<!-- other info --> 	
+							<h:form styleClass="form">
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Key Skill:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.key_skills}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Availability:" />
+									</div>
+									<div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.availiability.description}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Entry By:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.entryBy.name}" />
+									</div>
+								</div>	
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Entry Date:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.entry_date}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Modify By:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.modifyBy.name}" />
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6">
+										<h:outputLabel value="Modify Date:" />
+									</div>
+									 <div class="form-group col-md-6">
+										<h:outputLabel value="#{candidateBean.candidate.modify_date}" />
+									</div>
+								</div>	
+							</h:form>				
+						</div>
+					</div>
+				</div>	
+			</div>	
+			<div class="form-group text-center">
+				<div class="form-check my-4">
+					<h:selectBooleanCheckbox value = "#{candidateBean.candidate.is_active }" id = "isactive"  styleClass="form-check-input"  p:readonly="readonly"/>
+					<h:outputLabel value="Is_Active?" class="form-check-label" for="isactive"/>
+				</div>
+			</div>	
+		</div>
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-link mr-2"></i>Job Pipeline</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<!-- company list -->
+					 <h:dataTable styleClass="table table-bordered" value="#{jobPipelineBean.jobPipelineList}" var="j">
+						<h:column>
+							<f:facet name="header">ID </f:facet>#{j.id }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Job Position</f:facet>
+							<h:link value="#{ j.joborder.job_position }" outcome="/views/joborder-detail">
+								<f:param name="joborderid" value="#{j.joborder.id}"></f:param>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Company</f:facet>
+							<h:link value="#{ j.joborder.company.name }" outcome="/views/company-detail">
+								<f:param name="companyid" value="#{ j.joborder.company.id}"></f:param>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Add Date</f:facet>#{ j.entry_date }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Entry By</f:facet>#{ j.entryBy.name }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Current Status Code</f:facet>
+							#{ j.candidatejoborderstatus.short_description }
+						</h:column>
+					</h:dataTable> 
+				</div>
+			</div>
+		</div> 
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

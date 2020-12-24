@@ -1,0 +1,336 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head></h:head>
+<body>
+	<ui:composition template="/template/template.xhtml">
+		<ui:define name="title">Joborder</ui:define>
+		<ui:define name="head">#{joborderBean.joborder.id!=0 ? 'Joborder Detail' : 'Company Detail'}</ui:define>
+		<ui:define name="content">
+			<!-- Job Detail -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Job Post Information</h6>
+				</div>
+				<div class="card-body">
+					<!-- Joborder list -->
+					<div class="container-fluid">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+								<h:outputLabel value="Company Name:" />
+							</div>
+							<div class="form-group col-md-6">
+								<h:outputLabel value="#{joborderBean.joborder.companyId.name}" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Job Position:" />
+							</div>
+							<div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.job_position}" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Basic Salary" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.basic_salary}" />
+							</div>
+						</div>	
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Total Employee:" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.total_employee}" />
+							</div>
+						</div>	
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Job Location:" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.job_location.name}" />
+							</div>
+						</div>	
+						<hr />
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Entry By:" />
+							</div>
+							<div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.entryBy.name}" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Entry Date" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.entry_date}" />
+							</div>
+						</div>	
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Modify By:" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.modifyBy.name}" />
+							</div>
+						</div>	
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:outputLabel value="Modify Date:" />
+							</div>
+							 <div class="form-group col-md-6">
+								<h:outputLabel value="#{jobOrderBean.joborder.modify_date}" />
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+			<!-- Job description -->
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Job Description</h6>	
+				</div>
+				<div class="card-body">
+					<div class="container-fluid">
+						<div class="text-jobs">
+		                   <h:outputText value="#{jobOrderBean.joborder.job_description}" escape="html"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Candidates Pipeline-->
+			<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Candidates Pipeline</h6>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<!-- company list -->
+					 <h:dataTable id="table" styleClass=" table table-striped table-bordered" value="#{jobPipelineBean.joborder_jobPipelineList}" var="j" >
+						<h:column>
+							<f:facet name="header">ID </f:facet>
+							#{j.id }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Name</f:facet>
+							<h:link value="#{ j.candidate.name }" outcome="/views/candidate-detail">
+								<f:param name="candidateid" value="#{j.candidate.id}"></f:param>
+							</h:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Added</f:facet>
+							#{ j.entry_date.toLocalDate() }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Entry By</f:facet>
+							#{ j.entryBy.name }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Status</f:facet>
+							#{ j.candidatejoborderstatus.short_description }
+						</h:column>
+						<h:column>
+							<f:facet name="header">Last Activity</f:facet>
+							---
+						</h:column>
+						<h:column>
+							<f:facet name="header">Action</f:facet>
+							<h:form>
+				                <h:commandLink  id="btnEdit" onclick="$('.myModal').modal(true);" styleClass="btn btn-primary" >
+				                	<i class="fas fa-user-cog"></i>
+				                	<f:ajax  listener="#{jobPipelineBean.findById(j.id)}"  render="editForm\\:select_status editForm\\:hidden_status"  execute="@this"/>
+				                </h:commandLink>
+				            </h:form>
+						</h:column>
+						<h:column>
+							<h:form>
+								<h:commandLink
+									action="#{jobPipelineBean.removeJobPipeline(j.id)}"
+									value=""  styleClass="btn btn-danger">
+									<i class="fas fa-user-minus"></i>
+								</h:commandLink>
+							</h:form>
+						</h:column>
+					</h:dataTable>
+				</div>
+				<h:link value="" outcome="/views/job-pipeline-add"  styleClass="pt-3">
+					<f:param name="joborderid" value="#{jobOrderBean.joborder.id}"></f:param><i class="fas fa-user-plus mr-1"></i>Add Candidate To This Job Order Pipeline
+				</h:link>
+			</div>
+		</div> 
+		</ui:define>
+		<!-- ............MODAL .......... -->
+		<ui:define name="modals">
+			<div class="modal fade myModal" id="edit_pipeline" role="dialog">
+			    <div class="modal-dialog">
+			    
+			      <!-- Modal content-->
+			      <h:form id="editForm">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				        	<h5 class="modal-title ml-3" style="color: black; font-weight: 600;">Job Orders: Log Activity</h5>
+				          	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				        </div>
+				        <div class="modal-body">
+				        	<div class="container">
+						         <div class="row mt-2">
+									<div class="col-md-6">
+										<p>Job Position:</p>
+										<p>Status:</p>
+										<p class="" style="margin-top: 60px;" id="schedule_event_label">Schedule Event:</p>
+									</div>
+									<div class="col-md-6">
+										<h:inputHidden value="#{jobPipelineBean.edit_jobpipeline.candidatejoborderstatus.id}" 	id="hidden_status"/>
+										<p>#{jobPipelineBean.joborder.job_position != null ? jobPipelineBean.joborder.job_position : "-"} </p>
+										<p>
+											<h:selectBooleanCheckbox  id="check_status"/>
+											<label class="form-check-label ml-1"  for="exampleCheck1">Change Status</label>
+											<h:selectOneMenu  value="#{jobPipelineBean.edit_jobpipeline.candidatejoborderstatus}"  styleClass="form-control mt-2"  id="select_status"  p:disabled="disabled" onchange="changeStatus(this)">
+													<f:selectItems value="#{candidateJobOrderStatusBean.joborderStatusList}" itemValue="#{cjs}" var="cjs" itemLabel="#{cjs.short_description}" ></f:selectItems>
+														<f:converter binding="#{candidateJobOrderStatusConverter}"></f:converter>
+											</h:selectOneMenu>
+										</p>
+										<div id="schedule_event">
+											<h:selectBooleanCheckbox  id="check_schedule" disabled="true"/>
+											<label class="form-check-label ml-1"  for="exampleCheck1">Schedule Event</label>
+											<div id="interview_related"  style="display:none;">
+												<label class="mt-2 mb-0" >Interview Type</label>
+												<h:selectOneMenu value="#{interviewRecordBean.interviewRecord.interviewType}" styleClass="form-control mt-2"  id="interview_type">
+													<f:selectItems value="#{interviewTypeBean.interviewTypeList}" itemValue="#{it}" var="it" itemLabel="#{it.description}" ></f:selectItems>
+														<f:converter binding="#{interviewTypeConverter}"></f:converter>
+												</h:selectOneMenu>
+												<label class="mt-2 mb-0" >Interview Date</label>
+												<h:inputText value="#{interviewRecordBean.interviewRecord.interview_date}" styleClass="form-control mr-2 mt-1"  p:required="required" p:type="date" id="interview_date" >
+													<f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+												</h:inputText>
+												<label class="mt-2 mb-0" >Time Interval <small>(Mins)</small></label>
+												<h:inputText value="#{interviewRecordBean.interviewRecord.interview_interval}" styleClass="form-control mr-2 mt-1"  p:required="required" p:type="number" id="interval"  />
+											</div>
+										</div>								
+									</div>
+								</div>
+				        	</div>  
+				        </div>
+				        <div class="modal-footer">
+				        <h:commandButton action="#{jobPipelineBean.updateJobPipline()}" value="Save" styleClass="btn btn-primary"  id="btnSave"/>
+				          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+			      </h:form>
+			   </div>
+	  		</div>
+		</ui:define>
+		<!-- ............SCRIPT .......... -->
+		<ui:define name="scripts">
+			<script type="text/javascript">
+			 	$(document).ready(function() {
+			 		/* statusValidate(); */
+				 	// if checkbox is not checked, disable selectbox
+				 	$('#editForm\\:check_status').on('change' , function() {
+					 		if(this.checked){
+					 			 $('#editForm\\:select_status').prop('disabled',false);
+					 			var currentStatusCode = $('#editForm\\:hidden_status').val();
+					 			if((currentStatusCode == '500') || (currentStatusCode == '600') || (currentStatusCode == '700' )){
+					 				$('#schedule_event_label').show();
+						 			$('#schedule_event').show();
+						 			$('#editForm\\:check_schedule').prop('disabled',false);
+					 			}
+						 	}else{
+							 	$("#editForm\\:select_status").val($('#editForm\\:hidden_status').val());
+						 		$('#editForm\\:select_status').prop('disabled',true);
+						 		scheduleItemClear();
+					 			/* statusValidate(); */
+						 		$('#editForm\\:check_schedule').prop('checked',false);
+						 		$('#interview_related').hide();
+						 		$('#editForm\\:check_schedule').prop('disabled',true);
+							}
+				 		   
+				 		});
+			 		$('#editForm\\:check_schedule').on('change', function() {
+				 		if(this.checked){
+				 			$('#interview_related').show();
+					 	}else{
+					 		 scheduleItemClear();
+					 		$('#interview_related').hide();
+						}
+			 		   
+			 		});
+
+			 		$('#editForm\\:btnSave').on('click', function() {
+			 			var currentStatusCode = $('#editForm\\:select_status').val();
+			 			if((currentStatusCode == '500') || (currentStatusCode == '600') || (currentStatusCode == '700' )){
+			 				 if($('#editForm\\:interview_date').val() == ""){
+			 					 $('#editForm\\:interview_date').prop("required",true);
+			 					 $('#editForm\\:interval').prop("required",true);
+			 					 swal({
+			 				          title: "Error!",
+			 				          text: "Please enter interview schedule !",
+			 				          icon: "error",
+			 				          button: "OK",
+			 				        });
+				 				/*  alert("Please enter interview schedule !"); */
+			 				 
+			 				 }else{
+			 					if($('#editForm\\:interval').val() != ""){
+			 						$('#editForm\\:interview_date').prop("required",false);
+				 					 $('#editForm\\:interval').prop("required",false);
+				 					$('#editForm\\:btnSave').submit();
+			 					}	
+						 	}
+			 			}else{
+			 				$('#editForm\\:interview_date').prop("required",false);
+		 					 $('#editForm\\:interval').prop("required",false);
+			 				$('#editForm\\:btnSave').submit();
+				 		}
+			 		});
+			 		function statusValidate() {
+			 			var currentStatusCodeForSchedule = $('#editForm\\:select_status').val();
+				 		if((currentStatusCodeForSchedule == '500') || (currentStatusCodeForSchedule == '600') || (currentStatusCodeForSchedule == '700' )){
+				 			$('#schedule_event_label').show();
+				 			$('#schedule_event').show();
+				 			
+					 	}else{
+					 		$('#schedule_event_label').hide();
+					 		$('#schedule_event').hide();	
+						}
+			 		} 	
+			 });
+
+			 	function scheduleItemClear() {
+		 			
+		 			$('#editForm\\:interview_type').val("Online");
+		 			 $('#editForm\\:interview_date').val("");
+		 			 $('#editForm\\:interval').val("");
+		 		}
+
+			 	function changeStatus(currentStatusCode) {
+		 			scheduleItemClear();
+			 		
+			 		if((currentStatusCode.value == '500') || (currentStatusCode.value == '600') || (currentStatusCode.value == '700' )){
+			 			$('#schedule_event_label').show();
+			 			$('#schedule_event').show();
+			 			$('#editForm\\:check_schedule').prop('disabled',false);
+				 	}else{
+				 		scheduleItemClear();
+				 		/* $('#schedule_event_label').hide();
+				 		$('#schedule_event').hide(); */
+				 		$('#editForm\\:check_schedule').prop('checked',false);
+				 		$('#interview_related').hide();
+				 		$('#editForm\\:check_schedule').prop('disabled',true);
+					}
+		 		}
+ 		</script>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="/template/template.xhtml">
+	<ui:define name="subtitle"></ui:define>
+	<ui:define name="newValue">
+		<h:link value="" outcome="/views/calendar" styleClass="btn btn-primary"> 
+		<i class="far fa-calendar"></i>
+			Calendar
+		</h:link>
+	</ui:define>
+	<ui:define name="head">Dashboard View</ui:define>
+		<ui:define name="content">
+				<!-- Content Row -->
+				<div class="row">
+					<div class="col-xl-6 col-lg-6">
+						<div class="card shadow mb-4">
+							<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+								<h6 class="m-0 font-weight-bold text-primary">Recent Hires</h6>
+							</div>
+							<!-- Card Body -->
+							<div class="card-body">
+								<div class="row">
+									<div class="table-responsive">
+										<h:dataTable styleClass="table" value="#{jobPipelineBean.jobPipelineRecentHireList}" var="j" >
+											<h:column>
+												<f:facet name="header">Name </f:facet>
+												<h:link value="#{j.candidate.name }"  outcome="/views/candidate-detail">
+													<f:param name="candidateid" value="#{j.candidate.id}"></f:param>
+												</h:link>
+											</h:column>
+											<h:column>
+												<f:facet name="header">Company</f:facet>
+												<h:link value="#{ j.joborder.company.name }" outcome="/views/company-detail">
+														<f:param name="companyid" value="#{j.joborder.company.id}"></f:param>
+												</h:link>
+												
+											</h:column>
+											<h:column>
+												<f:facet name="header">Recruiter</f:facet>
+												#{j.modifyBy.name}
+												
+											</h:column>
+											<h:column>
+												<f:facet name="header">Date</f:facet>
+												#{ j.modify_date.toLocalDate() }
+											</h:column>
+										</h:dataTable>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="col-xl-6 col-lg-6">
+						<!-- Project Card Example -->
+			              <div class="card shadow mb-4">
+			                <div class="card-header py-3">
+			                  <h6 class="m-0 font-weight-bold text-primary">Hiring Overview</h6>
+			                </div>
+			                <div class="card-body">
+			                  <h4 class="small font-weight-bold">January - February<span class="float-right">20%</span></h4>
+			                  <div class="progress mb-4">
+			                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+			                  </div>
+			                  <h4 class="small font-weight-bold"> March - April<span class="float-right">40%</span></h4>
+			                  <div class="progress mb-4">
+			                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+			                  </div>
+			                  <h4 class="small font-weight-bold">May - June<span class="float-right">60%</span></h4>
+			                  <div class="progress mb-4">
+			                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+			                  </div>
+			                  <h4 class="small font-weight-bold">July - August <span class="float-right">80%</span></h4>
+			                  <div class="progress mb-4">
+			                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+			                  </div>
+			                  <h4 class="small font-weight-bold">September - October<span class="float-right">Complete!</span></h4>
+			                  <div class="progress">
+			                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+			                  </div>
+			                </div>
+			              </div>	
+					</div>
+					
+					<div class="col-xl-12 col-lg-12 ">
+					<div class="card shadow mb-4">
+						<!-- Card Header - Dropdown -->
+						<div
+							class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+							<h6 class="m-0 font-weight-bold text-primary">Important Candidates(Interview Request, Interviewing and Offered in Active Job Orders)</h6>
+	
+						</div>
+						<!-- Card Body -->
+						<div class="card-body">
+							<div class="row">
+								<div class="container-fluid">
+									<div class="row pt-3">
+										<div class="table-responsive">
+											<h:dataTable styleClass="table table-bordered"
+												value="#{jobPipelineBean.jobPipelinePrcessActiveJobOrderList}" var="j" >
+												<h:column>
+													<f:facet name="header">Name </f:facet>
+														<h:link value="#{j.candidate.name }"  outcome="/views/candidate-detail">
+															<f:param name="candidateid" value="#{j.candidate.id}"></f:param>
+														</h:link>
+													
+												</h:column>
+												<h:column>
+													<f:facet name="header">Status</f:facet>
+													#{j.candidatejoborderstatus.short_description }
+	
+												</h:column>
+												
+												<h:column>
+													<f:facet name="header">Position</f:facet>
+													<h:link value="#{ j.joborder.job_position }"
+														outcome="/views/joborder-detail">
+														<f:param name="joborderid" value="#{j.joborder.id}"></f:param>
+													</h:link>
+												</h:column>
+												
+												<h:column>
+													<f:facet name="header">Company</f:facet>
+													<h:link value="#{ j.joborder.company.name }" outcome="/views/company-detail">
+															<f:param name="companyid" value="#{j.joborder.company.id}"></f:param>
+													</h:link>
+													
+												</h:column>
+												
+	
+												<h:column>
+													<f:facet name="header">Modified</f:facet>
+													#{ j.modify_date.toLocalDate() }
+												</h:column>
+												
+											</h:dataTable>
+	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+
+			<!-- /.container-fluid -->
+		</ui:define>
+		<ui:define name="scripts">
+			<script type="text/javascript">
+				$(document).ready(function() {
+					document.addEventListener('DOMContentLoaded', function() {
+					    var calendarEl = document.getElementById('calendar');
+		
+					    var calendar = new FullCalendar.Calendar(calendarEl, {
+					      initialView: 'dayGridMonth',
+					      initialDate: '2020-11-07',
+					      headerToolbar: {
+					        left: 'prev,next today',
+					        center: 'title',
+					        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+					      },
+					      events: [
+					        {
+					          title: 'All Day Event',
+					          start: '2020-11-01'
+					        },
+					        {
+					          title: 'Long Event',
+					          start: '2020-11-07',
+					          end: '2020-11-10'
+					        },
+					        {
+					          groupId: '999',
+					          title: 'Repeating Event',
+					          start: '2020-11-09T16:00:00'
+					        },
+					        {
+					          groupId: '999',
+					          title: 'Repeating Event',
+					          start: '2020-11-16T16:00:00'
+					        },
+					        {
+					          title: 'Conference',
+					          start: '2020-11-11',
+					          end: '2020-11-13'
+					        },
+					        {
+					          title: 'Meeting',
+					          start: '2020-11-12T10:30:00',
+					          end: '2020-11-12T12:30:00'
+					        },
+					        {
+					          title: 'Lunch',
+					          start: '2020-11-12T12:00:00'
+					        },
+					        {
+					          title: 'Meeting',
+					          start: '2020-11-12T14:30:00'
+					        },
+					        {
+					          title: 'Birthday Party',
+					          start: '2020-11-13T07:00:00'
+					        },
+					        {
+					          title: 'Click for Google',
+					          url: 'http://google.com/',
+					          start: '2020-11-28'
+					        }
+					      ]
+					    });
+		
+					    calendar.render();
+					  });
+				});	
+	 	</script>
+		</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+<h:head></h:head>
+<body>
+	<ui:composition template="/template/template.xhtml">
+		<ui:define name="title">Candidate Info</ui:define>
+		<ui:define name="head">#{candidateBean.candidate.id != 0 ? 'Edit Candidate' : 'Add New Candidate'}</ui:define>
+		
+		<ui:define name="newValue">
+			<h:link value="Back Candidate" outcome="/views/candidates" styleClass="btn btn-secondary"/>
+		</ui:define>
+		<ui:define name="content">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3">
+					<h6 class="m-0 font-weight-bold text-primary">Candidate Info:Form</h6>
+				</div>
+				<div class="card-body">
+					<h:form id="candidateform" enctype="multipart/form-data">
+				 		<h:inputHidden value="#{candidateBean.candidate.id}" />
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:inputText p:placeholder="Enter Name" value="#{candidateBean.candidate.name}" styleClass="form-control" p:required="required"/>
+							</div>
+							<div class="form-group col-md-6">
+								<h:inputText p:placeholder="Email" value="#{candidateBean.candidate.email}" styleClass="form-control" p:required="required" p:type="email"/>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:inputText p:placeholder="Phone" value="#{candidateBean.candidate.phone}" styleClass="form-control" p:required="required"/>
+							</div>
+							<div class="form-group col-md-6">
+								<h:inputText p:placeholder="Key Skills" value="#{candidateBean.candidate.key_skills}" styleClass="form-control" p:required="required"/>
+							</div>
+						</div>	
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:selectOneMenu value="#{candidateBean.candidate.township}" styleClass="form-control">
+									<f:selectItems value="#{townshipBean.townshipList}" itemValue="#{t}" var="t" itemLabel="#{t.name}"></f:selectItems>
+									<f:converter binding="#{townshipConverter}"></f:converter>
+								</h:selectOneMenu>
+							</div>
+							<div class="form-group col-md-6">
+								 <h:selectOneMenu value="#{candidateBean.candidate.availiability}" styleClass="form-control">
+									<f:selectItems value="#{availabilityTypeBean.availabilitytypeList}" itemValue="#{at}" var="at" itemLabel="#{at.description}"></f:selectItems>
+									<f:converter binding="#{availabilityTypeConverter}"></f:converter>
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<h:inputText value="#{candidateBean.candidate.expectedSalary}" styleClass="form-control" p:required="required" p:placeholder="Salary" p:type="number" />
+							</div>
+							<div class="form-group col-md-6">
+							 	<h:message for="cvform" styleClass="text-danger"/>
+								<h:inputFile id="file-id" value="#{candidateBean.cv_form}" alt="upload file"  rendered="#{candidateBean.candidate.id == 0}" p:required="required"></h:inputFile>
+							</div>
+						</div>	
+						<div class="form-group">
+							<div class="form-check">
+								<h:selectBooleanCheckbox value="#{candidateBean.candidate.is_active}" id="isactive" styleClass="form-check-input " />
+								<h:outputLabel value="Is_Active?" class="form-check-label" for="isactive"/>
+							</div>
+						</div>
+						<h:commandButton action="#{candidateBean.saveCandidate()}" value="#{candidateBean.candidate.id != 0 ? 'Update' : 'Add'}" styleClass="btn btn-primary">
+						</h:commandButton>
+						<h:commandButton value="Clear" p:type="reset" styleClass="btn btn-danger ml-2" />
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

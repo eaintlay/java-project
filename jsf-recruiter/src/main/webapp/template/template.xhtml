@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	
+	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="dataTables.bootstrap4.min.css"></h:outputStylesheet>
+	
+	<!-- Custom fonts for this template -->
+  	<h:outputStylesheet library="webjars" name="font-awesome/5.15.1/css/all.min-jsf.css" />
+  	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
+  	
+  	<!-- For calendar -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css" />
+	
+	<!-- summer note -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet"/>
+	
+	<h:outputStylesheet library="css" name="sb-admin-2.min.css"></h:outputStylesheet>
+	
+	<!-- Custom styles for this page -->
+	<h:outputStylesheet library="vendor" name="datatables/dataTables.bootstrap4.min.css"></h:outputStylesheet>
+
+	<title><ui:insert name="title">Name</ui:insert></title>
+	<ui:insert name="header_resources"></ui:insert>
+</h:head>
+<body id="page-top">
+
+  	<!-- Page Wrapper -->
+	<div id="wrapper">
+		
+		<!-- Sidebar -->
+		<ui:include src="/template/sidebar.xhtml"></ui:include>
+		<!-- End of Sidebar -->
+		
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+		
+		  <!-- Main Content -->
+		 <div id="content">		
+			   <!-- Topbar -->
+			   <ui:include src="/template/topbar.xhtml" />		
+			   <!-- Begin Page Content -->
+			   <div class="container-fluid">
+				<!-- Page Heading -->
+				<h1 class="h3 text-gray-800 mb-3">
+				<ui:insert name="newValue"></ui:insert></h1>
+				<ui:insert name="content">Content...</ui:insert>
+				<ui:insert name="modals"></ui:insert>
+		     </div>	
+		 </div>
+		 <!-- End of Main Content -->
+		
+		<!-- Footer -->
+		<ui:include src="/template/footer.xhtml" />
+		<!-- End of Footer -->
+		
+		</div>
+		<!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
+	
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+	  <i class="fas fa-angle-up"></i>
+	</a>
+	<!-- Logout Modal-->
+	<ui:include src="/template/logout.xhtml" />
+	
+	<ui:include src="/template/modals.xhtml" />
+
+	<!-- End of Page level resources -->
+
+
+	<!-- Bootstrap core JavaScript-->
+	<h:outputScript library="vendor" name="jquery/jquery.min.js"></h:outputScript>
+	
+	<!-- sweet alert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<!-- summer note -->
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+	<h:outputScript library="vendor" name="bootstrap/js/bootstrap.bundle.min.js"></h:outputScript>
+	
+	<!-- JavaScript-->
+	<h:outputScript library="vendor" name="jquery-easing/jquery.easing.min.js"></h:outputScript>
+	
+	<!-- Custom scripts for all pages-->
+	<h:outputScript library="js" name="sb-admin-2.min.js"></h:outputScript>
+
+	<!-- dataTable -->
+	<h:outputScript library="vendor" name="datatables/jquery.dataTables.min.js"></h:outputScript>
+	<h:outputScript library="vendor" name="datatables/dataTables.bootstrap4.min.js"></h:outputScript>
+	<h:outputScript library="js" name="demo/datatables-demo.js"></h:outputScript>
+	
+	<!-- Calendar -->
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js"></script>
+ 	<!-- summer note -->
+	<script type="text/javascript">
+	 	$(document).ready(function() {
+	 		  $('.table').DataTable();
+	 		 $('#summernote').summernote();
+	 		});
+	</script>
+	<!-- Calendar -->
+ 	<ui:insert name="scripts"></ui:insert>
+ 	
+</body>
+</html>

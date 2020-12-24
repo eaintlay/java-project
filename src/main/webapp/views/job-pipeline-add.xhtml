@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head></h:head>
+<body>
+	<ui:composition template="/template/template.xhtml">
+		<ui:define name="title">Candidates</ui:define>
+		<ui:define name="head">Candidates List</ui:define>
+		<ui:define name="content">
+		<h:form>
+			<h:commandLink action="#{jobPipelineBean.saveJobPipline()}" value="" styleClass="btn btn-primary">
+				<i class="fas fa-plus mr-1"></i>Add Candidate
+			</h:commandLink>
+			<span class="pl-2"> (Position : 
+			<h:link value="#{jobPipelineBean.joborder.job_position}" outcome="/views/joborder-detail">
+				<f:param name="joborderid" value="#{jobPipelineBean.joborder.id}"></f:param>
+			</h:link> | Company : 
+			<h:link value="#{jobPipelineBean.joborder.company.name}" outcome="/views/company-detail">
+					<f:param name="companyid" value="#{jobPipelineBean.joborder.company.id}"></f:param>
+			</h:link>)
+			</span>
+				<div class="card shadow mt-2 mb-4">
+					<div class="card-header py-3">
+						<h6 class="m-0 font-weight-bold text-primary">Candidates Table</h6>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive ">
+							<!-- company list -->
+							<h:dataTable  id="dataTable" styleClass=" table table-bordered" value="#{jobPipelineBean.candidate_jobPipelineList}" var="c">
+								<h:column>
+									<f:facet name="header">ID</f:facet>
+									<h:selectBooleanCheckbox value="#{jobPipelineBean.checkedCandidates[c.id]}"  styleClass="mr-2" id="checkbox">
+									</h:selectBooleanCheckbox>
+									#{c.id }
+								</h:column>
+								<h:column>
+									<f:facet name="header">Name</f:facet>
+									<h:link value="#{ c.name }" outcome="/views/candidate-detail">
+											<f:param name="candidateid" value="#{c.id}"></f:param>
+									</h:link>
+								</h:column>
+								<h:column>
+									<f:facet name="header">Phone</f:facet>
+									#{ c.phone }
+								</h:column>
+								<h:column>
+									<f:facet name="header">Email</f:facet>
+									#{ c.email }
+								</h:column>
+								<h:column>
+									<f:facet name="header">Key Skills</f:facet>
+									#{ c.key_skills }
+								</h:column>
+								<h:column>
+									<f:facet name="header">Expected Salary</f:facet>
+									#{ c.expectedSalary }
+								</h:column>
+							</h:dataTable>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
