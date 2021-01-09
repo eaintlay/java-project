@@ -10,7 +10,7 @@
 		<ui:define name="title">Recruiter</ui:define>
 		<ui:define name="head">Recruiter List</ui:define>
 		<ui:define name="newValue">
-			<h:link icon="fas fa-plus mx-2" value="Add New Recruiter" outcome="/views/recruiter-add" styleClass="btn btn-secondary" rendered="#{loginBean.loginUser.role eq 'Admin'}"/>
+			<h:link icon="fas fa-plus mx-2" value="Add New Recruiter" outcome="/views/recruiter-add" styleClass="btn btn-primary" rendered="#{loginBean.loginUser.role eq 'Admin'}"/>
 		</ui:define>
 		<ui:define name="content">
 			<div class="card shadow mb-4">
